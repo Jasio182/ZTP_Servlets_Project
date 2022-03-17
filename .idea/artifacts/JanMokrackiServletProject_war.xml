@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="JanMokrackiServletProject:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>JanMokrackiServletProject</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="JanMokrackiServletProject-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="JanMokrackiServletProject:war exploded" />
+    </root>
+  </artifact>
+</component>
