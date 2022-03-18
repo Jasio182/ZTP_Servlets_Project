@@ -6,26 +6,36 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Optional;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("TestServlet").forward(request, response);
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        response.sendRedirect("login.html");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login;
-        login = Arrays.stream(request.getParameterValues("Login")).findFirst().get();
-        request.getRequestDispatcher("AdminLoginServlet").forward(request, response);
-        RequestDispatcher dispatcher;
-        if ("admin".equals(login)) {
-            dispatcher = request.getRequestDispatcher("AdminLoginServlet");
-        } else {
-            dispatcher = request.getRequestDispatcher("UserLoginServlet");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        try{
+            String login = Arrays.stream(request.getParameterValues("Login")).findFirst().get();
+            RequestDispatcher dispatcher;
+            if ("admin".equals(login)) {
+                dispatcher = request.getRequestDispatcher("AdminLoginServlet");
+            } else {
+                dispatcher = request.getRequestDispatcher("UserLoginServlet");
+            }
+            request.getSession().setAttribute("username", login);
+            dispatcher.forward(request, response);
         }
-        //dispatcher.forward(request, response);
+        catch(Exception e)
+        {
+            request.getRequestDispatcher("/loginFailed.html").forward(request, response);
+        }
     }
 }

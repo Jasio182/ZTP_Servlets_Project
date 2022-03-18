@@ -2,18 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Project 1</title>
+    <title>Projekt 1</title>
 </head>
 <body>
-    <h1><%= "Log In!" %>
-    </h1>
-    <br/>
-    <form action="login.html">
-        <label for="Login">Login:</label><br>
-        <input type="text" id="Login" name="Login"><br>
-        <label for="Password">Password:</label><br>
-        <input type="text" id="Password" name="Password"><br><br>
-        <input type="submit" value="Sign in">
-    </form>
+    <H1>Zaawansowane Techniki Programowania</H1>
+    <H2>Projekt Servlety</H2>
+    <a>Jan Mokracki, 130807</a>
+    <a>Informatyka, Cyberbezpieczeństwo CY2</a>
+    <a>Stopień 2, Studia stacjonarne</a>
+    <br>
     </body>
 </html>
