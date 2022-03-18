@@ -1,5 +1,7 @@
-package com.example.janmokrackiservletproject.servlets;
+package com.janmokrackiservletproject.servlets;
 
+import com.janmokrackiservletproject.database.PasswordHashing;
+import com.janmokrackiservletproject.database.UserDbAccess;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;

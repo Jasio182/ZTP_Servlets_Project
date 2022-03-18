@@ -1,20 +1,23 @@
-package com.example.janmokrackiservletproject.servlets;
+package com.janmokrackiservletproject.servlets;
 
+import com.janmokrackiservletproject.database.UserDbAccess;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
+import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
-@WebServlet(name = "LoginServlet", value = "/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "UserLoginServlet", value = "/UserLoginServlet")
+public class UserLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
-        response.sendRedirect("login.html");
+        request.getRequestDispatcher("login.html").forward(request, response);
     }
 
     @Override
@@ -23,15 +26,19 @@ public class LoginServlet extends HttpServlet {
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
         try{
+            String password = Arrays.stream(request.getParameterValues("Password")).findFirst().get();
             String login = Arrays.stream(request.getParameterValues("Login")).findFirst().get();
-            RequestDispatcher dispatcher;
-            if ("admin".equals(login)) {
-                dispatcher = request.getRequestDispatcher("AdminLoginServlet");
+            UserDbAccess dbAccess = new UserDbAccess();
+            if (dbAccess.UserExists(login, password)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("logged", true);
+                session.setAttribute("userType", "User");
+                request.getSession().setAttribute("username", login);
+                session.setAttribute("password", password);
+                request.getRequestDispatcher("DashboardServlet").forward(request, response);
             } else {
-                dispatcher = request.getRequestDispatcher("UserLoginServlet");
+                throw new AuthenticationException();
             }
-            request.getSession().setAttribute("username", login);
-            dispatcher.forward(request, response);
         }
         catch(Exception e)
         {

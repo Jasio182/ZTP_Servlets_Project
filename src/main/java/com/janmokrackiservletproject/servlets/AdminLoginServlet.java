@@ -1,5 +1,6 @@
-package com.example.janmokrackiservletproject.servlets;
+package com.janmokrackiservletproject.servlets;
 
+import com.janmokrackiservletproject.database.UserDbAccess;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -28,10 +29,13 @@ public class AdminLoginServlet extends HttpServlet {
         response.setDateHeader("Expires", 0);
         try{
             String password = Arrays.stream(request.getParameterValues("Password")).findFirst().get();
-            if ("admin".equals(password)) {
+            String login = Arrays.stream(request.getParameterValues("Login")).findFirst().get();
+            UserDbAccess dbAccess = new UserDbAccess();
+            if (dbAccess.UserExists(login, password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("logged", true);
                 session.setAttribute("userType", "Admin");
+                request.getSession().setAttribute("username", login);
                 session.setAttribute("password", password);
                 request.getRequestDispatcher("DashboardServlet").forward(request, response);
             } else {
@@ -40,7 +44,6 @@ public class AdminLoginServlet extends HttpServlet {
         }
         catch(Exception e)
         {
-            request.getSession().removeAttribute("username");
             request.getRequestDispatcher("/loginFailed.html").forward(request, response);
         }
     }

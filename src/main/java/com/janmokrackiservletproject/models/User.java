@@ -1,4 +1,4 @@
-package com.example.janmokrackiservletproject.models;
+package com.janmokrackiservletproject.models;
 
 public class User {
 
