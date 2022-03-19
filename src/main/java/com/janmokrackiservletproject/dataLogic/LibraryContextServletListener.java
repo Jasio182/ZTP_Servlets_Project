@@ -1,4 +1,4 @@
-package com.janmokrackiservletproject.database;
+package com.janmokrackiservletproject.dataLogic;
 
 import com.janmokrackiservletproject.models.Book;
 import jakarta.servlet.ServletContextEvent;

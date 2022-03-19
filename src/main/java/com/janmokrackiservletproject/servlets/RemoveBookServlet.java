@@ -1,6 +1,6 @@
 package com.janmokrackiservletproject.servlets;
 
-import com.janmokrackiservletproject.database.BookDbAccess;
+import com.janmokrackiservletproject.dataLogic.BookDbAccess;
 import com.janmokrackiservletproject.models.Book;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;

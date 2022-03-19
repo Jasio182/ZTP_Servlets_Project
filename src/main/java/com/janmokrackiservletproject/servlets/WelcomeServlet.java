@@ -1,12 +1,9 @@
 package com.janmokrackiservletproject.servlets;
 
-import com.janmokrackiservletproject.database.PasswordHashing;
-import com.janmokrackiservletproject.database.UserDbAccess;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-import javax.naming.Context;
 import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 
@@ -21,6 +18,9 @@ public class WelcomeServlet extends HttpServlet {
         {
             boolean logged = (boolean) request.getSession().getAttribute("logged");
             if(logged == true) {
+                HttpSession session = request.getSession();
+                session.setAttribute("logged", true);
+                session.setAttribute("userType", 0);
                 request.getRequestDispatcher("DashboardServlet").forward(request, response);
             }
             else {

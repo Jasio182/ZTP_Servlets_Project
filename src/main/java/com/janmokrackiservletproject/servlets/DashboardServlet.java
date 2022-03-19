@@ -1,6 +1,5 @@
 package com.janmokrackiservletproject.servlets;
 
-import com.janmokrackiservletproject.database.LibraryContextServletListener;
 import com.janmokrackiservletproject.models.Book;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;

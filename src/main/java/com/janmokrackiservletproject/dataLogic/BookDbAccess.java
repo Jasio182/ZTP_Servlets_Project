@@ -1,13 +1,10 @@
-package com.janmokrackiservletproject.database;
+package com.janmokrackiservletproject.dataLogic;
 
 import com.janmokrackiservletproject.models.Book;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class BookDbAccess extends DbAccess  {
 

@@ -1,14 +1,13 @@
 package com.janmokrackiservletproject.servlets;
 
-import com.janmokrackiservletproject.database.PasswordHashing;
-import com.janmokrackiservletproject.database.UserDbAccess;
+import com.janmokrackiservletproject.dataLogic.PasswordHashing;
+import com.janmokrackiservletproject.dataLogic.UserDbAccess;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -54,7 +53,8 @@ public class UserLoginServlet extends HttpServlet {
             if (checkUser(login, hashedPassword)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("logged", true);
-                request.getRequestDispatcher("DashboardServlet").forward(request, response);
+                session.setAttribute("userType", 1);
+                response.sendRedirect("DashboardServlet");
             } else {
                 throw new AuthenticationException();
             }

@@ -1,13 +1,12 @@
 package com.janmokrackiservletproject.servlets;
 
-import com.janmokrackiservletproject.database.UserDbAccess;
+import com.janmokrackiservletproject.dataLogic.UserDbAccess;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 
 
@@ -34,7 +33,8 @@ public class AdminLoginServlet extends HttpServlet {
             if (dbAccess.UserExists(login, password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("logged", true);
-                request.getRequestDispatcher("AdminServlet").forward(request, response);
+                session.setAttribute("userType", 0);
+                response.sendRedirect("DashboardServlet");
             } else {
                 throw new AuthenticationException();
             }

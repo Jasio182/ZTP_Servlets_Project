@@ -1,4 +1,4 @@
-package com.janmokrackiservletproject.database;
+package com.janmokrackiservletproject.dataLogic;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
