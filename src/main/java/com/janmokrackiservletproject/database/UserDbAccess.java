@@ -4,15 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
 
 public class UserDbAccess extends DbAccess {
 
     public boolean UserExists(String username, String password) {
          try {
-             Class.forName("org.sqlite.JDBC");
              String hashedPass = PasswordHashing.HashPassword(password);
-             Connection connection = DriverManager.getConnection(jdbcURL);
-             Statement statement = connection.createStatement();
+             Statement statement = GetConnection().createStatement();
              String query = "SELECT * FROM Users WHERE login = '" + username +"';";
              ResultSet result = statement.executeQuery(query);
              while (result.next()) {
@@ -25,20 +24,22 @@ public class UserDbAccess extends DbAccess {
              e.printStackTrace();
          }
          return false;
-     }
+    }
 
-    public boolean AddUser(String username, String password){
-         try {
-             Class.forName("org.sqlite.JDBC");
-             String hashedPass = PasswordHashing.HashPassword(password);
-             Connection connection = DriverManager.getConnection(jdbcURL);
-             Statement statement = connection.createStatement();
-             String query = "INSERT INTO Users VALUES ('"+username+"', '"+hashedPass+"', '"+ 1 +"');";
-             statement.executeUpdate(query);
-             return true;
-         } catch (Exception e) {
-             e.printStackTrace();
-             return false;
-         }
+    public HashMap<String, String> FillUsersMap()
+    {
+        try {
+            Statement statement = GetConnection().createStatement();
+            String query = "SELECT * FROM Users";
+            ResultSet result = statement.executeQuery(query);
+            HashMap<String, String> users = new HashMap<String, String>();
+            while (result.next()) {
+                users.put(result.getString("login"), result.getString("pass"));
+            }
+            return users;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new HashMap<String, String>();
+        }
     }
 }

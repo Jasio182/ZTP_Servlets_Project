@@ -1,6 +1,5 @@
 package com.janmokrackiservletproject.servlets;
 
-import com.janmokrackiservletproject.database.LibraryContextServletListener;
 import com.janmokrackiservletproject.models.Book;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -10,14 +9,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-
-@WebServlet(name = "DashboardServlet", value = "/DashboardServlet")
-public class DashboardServlet extends HttpServlet {
+@WebServlet(name = "AdminServlet", value = "/AdminServlet")
+public class AdminServlet extends HttpServlet {
 
     ArrayList<Book> books;
 
     @Override
-    public void init() throws ServletException {
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         ServletContext context = getServletContext();
         books = (ArrayList<Book>) context.getAttribute("books");
     }
@@ -32,7 +31,7 @@ public class DashboardServlet extends HttpServlet {
         out.println("<html lang=\"en\">");
         out.println("<head>");
         out.println("<meta charset=\"UTF-8\">");
-        out.println("<title>Dashboard</title>");
+        out.println("<title>Admin</title>");
         out.println("</head>");
         out.println("<style>\n" +
                 "table, td, th {\n" +
@@ -48,12 +47,26 @@ public class DashboardServlet extends HttpServlet {
                 "    <th>Year</th>\n" +
                 "  </tr>\n");
         for (Book book:
-             books) {
+                books) {
             out.println(book.toString());
         }
         out.println("</table>");
         out.println("<form action=\"LogoutServlet\">\n");
         out.println("<input type=\"submit\" value=\"Logout\">\n");
+        out.println("</form>");
+        out.println("<form action=\"AddBookServlet\">\n");
+        out.println("<label for=\"TitleOfBookToAdd\">Title of book to add:</label><br>\n");
+        out.println("<input type=\"text\" id=\"TitleOfBookToAdd\" name=\"TitleOfBookToAdd\"><br>\n");
+        out.println("<label for=\"AuthorOfBookToAdd\">Author of book to add:</label><br>\n");
+        out.println("<input type=\"text\" id=\"AuthorOfBookToAdd\" name=\"AuthorOfBookToAdd\"><br><br>");
+        out.println("<label for=\"YearOfBookToAdd\">Year of book to add:</label><br>\n");
+        out.println("<input type=\"text\" id=\"YearOfBookToAdd\" name=\"YearOfBookToAdd\"><br><br>");
+        out.println("<input type=\"submit\" value=\"Add\">\n");
+        out.println("</form>");
+        out.println("<form action=\"RemoveBookServlet\">\n");
+        out.println("<label for=\"TitleOfBookToRemove\">Title of book to remove:</label><br>\n");
+        out.println("<input type=\"text\" id=\"TitleOfBookToRemove\" name=\"TitleOfBookToRemove\"><br>\n");
+        out.println("<input type=\"submit\" value=\"Remove\">\n");
         out.println("</form>");
         out.println("</body>");
         out.println("</html>");

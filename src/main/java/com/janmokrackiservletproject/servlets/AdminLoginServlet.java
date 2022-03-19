@@ -34,10 +34,7 @@ public class AdminLoginServlet extends HttpServlet {
             if (dbAccess.UserExists(login, password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("logged", true);
-                session.setAttribute("userType", "Admin");
-                request.getSession().setAttribute("username", login);
-                session.setAttribute("password", password);
-                request.getRequestDispatcher("DashboardServlet").forward(request, response);
+                request.getRequestDispatcher("AdminServlet").forward(request, response);
             } else {
                 throw new AuthenticationException();
             }
